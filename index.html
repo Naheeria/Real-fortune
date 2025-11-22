@@ -13,15 +13,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /* height 대신 min-height를 사용하여 내용이 넘쳐도 스크롤 가능하게 함 */
             min-height: 100vh;
             margin: 0;
             background-color: #1a1a2e; /* 어두운 우주 배경 */
             font-family: 'Noto Sans KR', sans-serif;
             color: #e0e0e0; /* 기본 글씨색은 밝게 */
+            padding: 20px; /* 작은 화면에서 좌우 여백 확보 */
+            box-sizing: border-box;
         }
 
         .sf-card {
-            width: 340px;
+            /* ▼▼▼ 이 부분이 수정되었습니다: 반응형 적용 ▼▼▼ */
+            width: 100%; /* 부모(body/iframe)의 너비를 100% 따릅니다. */
+            max-width: 340px; /* 최대 크기는 340px을 넘지 않도록 제한합니다. */
+            /* ▲▲▲ 수정 끝 ▲▲▲ */
             background-color: #2b2b45; /* 카드 배경은 살짝 밝은 어둠 */
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(10, 255, 10, 0.3); /* 초록색 빛나는 그림자 */
@@ -46,6 +52,7 @@
             border-bottom: 1px dashed #4e4e66;
             letter-spacing: 1px;
         }
+        /* ... (나머지 CSS는 유지) ... */
 
         .date-text {
             font-size: 0.85em;
@@ -108,6 +115,16 @@
             margin-top: 20px;
             border-radius: 3px;
         }
+        
+        /* 모바일 등 작은 화면을 위한 추가적인 조정 (선택 사항) */
+        @media (max-width: 400px) {
+            .header-title {
+                font-size: 1.6em; /* 작은 화면에서 제목 폰트 크기 줄이기 */
+            }
+            .result-text {
+                font-size: 1.2em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -131,26 +148,16 @@
     <script>
         // JS 코드는 이전과 동일하게 작동하며 운세를 랜덤으로 표시합니다.
 
-        // 1. 운세 결과 목록 정의 (새로운 항목 추가됨)
+        // 1. 운세 결과 목록 정의
         const fortunes = [
-            "꼬마돈까스를 놓치는 날",
-            "먹고 싶었던 식당의 사장님이 게이트에 휘말리는 날",
-            "뭐든 틀리지 않는 날",
-            "S급 헌터가 외계인이라는 사실을 알게 되는 날",
-            "사직서를 낸 회사의 예전 상사를 마주치는 날",
-            "헌터 랭킹이 1024위로 떨어지는 날",
-            
-            // ▼▼ 추가된 운세 목록 ▼▼
-            "택시 타고 가는데 뒤에서 스포츠카가 들이받는 날",
-            "게이트에 집이 휘말리는 날",
-            "돌아갈 집이 없어졌는데 비가 오는 날",
-            "S급 스토커가 바다까지 따라오는 날",
-            "애들이 내 얼굴을 보고 울음을 터트리는 날",
-            "정당한 대가로 생귤탱귤을 얻어 먹는 날",
-            "내가 사실은 X밥이란 것을 알게되는 날",
-            "이상하게 재채기가 멈추지 않는 날",
+            "꼬마돈까스를 놓치는 날", "먹고 싶었던 식당의 사장님이 게이트에 휘말리는 날",
+            "뭐든 틀리지 않는 날", "S급 헌터가 외계인이라는 사실을 알게 되는 날",
+            "사직서를 낸 회사의 예전 상사를 마주치는 날", "헌터 랭킹이 1024위로 떨어지는 날",
+            "택시 타고 가는데 뒤에서 스포츠카가 들이받는 날", "게이트에 집이 휘말리는 날",
+            "돌아갈 집이 없어졌는데 비가 오는 날", "S급 스토커가 바다까지 따라오는 날",
+            "애들이 내 얼굴을 보고 울음을 터트리는 날", "정당한 대가로 생귤탱귤을 얻어 먹는 날",
+            "내가 사실은 X밥이란 것을 알게되는 날", "이상하게 재채기가 멈추지 않는 날",
             "레전더리급 아이템을 얻게 되는 날"
-            // ▲▲ 추가된 운세 목록 ▲▲
         ];
 
         // 2. 현재 날짜를 표시하는 함수
@@ -163,10 +170,7 @@
 
         // 3. 운세를 랜덤으로 선택하고 표시하는 함수
         function displayRandomFortune() {
-            // 목록의 길이 내에서 무작위 정수 인덱스 생성
             const randomIndex = Math.floor(Math.random() * fortunes.length);
-            
-            // 무작위로 선택된 운세를 HTML 요소에 삽입
             document.getElementById('fortuneResult').textContent = fortunes[randomIndex];
         }
 
