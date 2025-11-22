@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 덕질 운세 (SF 스타일)</title>
+    <style>
+        /* 폰트는 깔끔한 SF 느낌의 Noto Sans KR 사용 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+
+        /* 기본 배경은 어둡게, 우주/SF 컨셉 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1a1a2e; /* 어두운 우주 배경 */
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #e0e0e0; /* 기본 글씨색은 밝게 */
+        }
+
+        .sf-card {
+            width: 340px;
+            background-color: #2b2b45; /* 카드 배경은 살짝 밝은 어둠 */
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(10, 255, 10, 0.3); /* 초록색 빛나는 그림자 */
+            border: 2px solid #3CB371; /* 초록색 외곽선 */
+            padding: 30px;
+            position: relative;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .sf-card:hover {
+            box-shadow: 0 15px 50px rgba(10, 255, 10, 0.5); /* 마우스 오버 시 더 강한 빛 */
+            transform: scale(1.02);
+        }
+
+        .header-title {
+            font-size: 1.8em;
+            color: #3CB371; /* 메인 초록색 */
+            text-shadow: 0 0 8px rgba(10, 255, 10, 0.7); /* 네온 효과 */
+            margin-bottom: 5px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #4e4e66;
+            letter-spacing: 1px;
+        }
+
+        .date-text {
+            font-size: 0.85em;
+            color: #8f8f9e;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .sf-content {
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+            background-color: #3a3a52; /* 내용 영역 배경 */
+            border-radius: 8px;
+            border: 1px solid #4e4e66;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        /* 외계인 데이터 패널 느낌의 요소 */
+        .sf-content::before {
+            content: "SCAN RESULT_";
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            font-size: 0.7em;
+            color: #3CB371;
+            opacity: 0.6;
+        }
+
+        .result-text {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #90EE90; /* 밝은 연두색 (결과 강조) */
+            line-height: 1.5;
+            word-break: keep-all;
+            margin: 0;
+            text-shadow: 0 0 5px rgba(144, 238, 144, 0.5); /* 은은한 발광 효과 */
+        }
+        
+        .instruction-text {
+            font-size: 0.8em;
+            color: #5f5f7a;
+            margin-top: 15px;
+        }
+
+        /* 하단 디테일 (에일리언 문양 같은 느낌) */
+        .sf-detail {
+            height: 5px;
+            background: repeating-linear-gradient(
+                45deg,
+                #3CB371,
+                #3CB371 10px,
+                #2b2b45 10px,
+                #2b2b45 20px
+            );
+            margin-top: 20px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sf-card">
+        <h1 class="header-title">👽 오늘의 덕질 시그널</h1>
+        <p class="date-text" id="todayDate">데이터 로딩 중...</p>
+        
+        <div class="sf-content">
+            <p class="result-text">
+                <span id="fortuneResult">시그널 수신 중...</span>
+            </p>
+        </div>
+        
+        <p class="instruction-text">
+            *새로운 시그널을 원하시면 페이지를 새로고침(F5)하세요.
+        </p>
+        <div class="sf-detail"></div>
+    </div>
+
+    <script>
+        // JS 코드는 이전과 동일하게 작동하며 운세를 랜덤으로 표시합니다.
+
+        // 1. 운세 결과 목록 정의 (새로운 항목 추가됨)
+        const fortunes = [
+            "꼬마돈까스를 놓치는 날",
+            "먹고 싶었던 식당의 사장님이 게이트에 휘말리는 날",
+            "뭐든 틀리지 않는 날",
+            "S급 헌터가 외계인이라는 사실을 알게 되는 날",
+            "사직서를 낸 회사의 예전 상사를 마주치는 날",
+            "헌터 랭킹이 1024위로 떨어지는 날",
+            
+            // ▼▼ 추가된 운세 목록 ▼▼
+            "택시 타고 가는데 뒤에서 스포츠카가 들이받는 날",
+            "게이트에 집이 휘말리는 날",
+            "돌아갈 집이 없어졌는데 비가 오는 날",
+            "S급 스토커가 바다까지 따라오는 날",
+            "애들이 내 얼굴을 보고 울음을 터트리는 날",
+            "정당한 대가로 생귤탱귤을 얻어 먹는 날",
+            "내가 사실은 X밥이란 것을 알게되는 날",
+            "이상하게 재채기가 멈추지 않는 날",
+            "레전더리급 아이템을 얻게 되는 날"
+            // ▲▲ 추가된 운세 목록 ▲▲
+        ];
+
+        // 2. 현재 날짜를 표시하는 함수
+        function displayDate() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
+            const dateString = now.toLocaleDateString('ko-KR', options);
+            document.getElementById('todayDate').textContent = `[ ${dateString} ]`;
+        }
+
+        // 3. 운세를 랜덤으로 선택하고 표시하는 함수
+        function displayRandomFortune() {
+            // 목록의 길이 내에서 무작위 정수 인덱스 생성
+            const randomIndex = Math.floor(Math.random() * fortunes.length);
+            
+            // 무작위로 선택된 운세를 HTML 요소에 삽입
+            document.getElementById('fortuneResult').textContent = fortunes[randomIndex];
+        }
+
+        // 페이지 로드 시 실행
+        displayDate();
+        displayRandomFortune();
+    </script>
+
+</body>
+</html>
